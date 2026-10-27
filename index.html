@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fox's Lair — Fox Is Loose</title>
+<meta name="description" content="Step inside The Fox's Lair: one animated fox's underground den of random finds, wild ideas, a comic strip, and videos. Refreshed daily.">
+<style>
+  :root{
+    --bg:#140d07; --bg2:#1e130a; --panel:#2a1a0ecc; --panel-solid:#2a1a0e; --panel2:#38220f;
+    --line:#4a3018; --ink:#f7ead8; --muted:#c9ae8d;
+    --fox:#ff7a1a; --fox2:#ffb347; --amber:#ffbe55; --teal:#35c4cf;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.55;overflow-x:hidden}
+  a{color:var(--fox2)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:2}
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(20,13,7,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px}
+  .brand{font-weight:900;letter-spacing:.05em;font-size:18px;color:var(--ink);text-decoration:none}
+  .brand span{color:var(--fox)}
+  .brand small{display:block;font-size:10px;letter-spacing:.3em;color:var(--muted);font-weight:700}
+  .links a{color:var(--muted);text-decoration:none;font-size:14px;margin-left:18px;font-weight:700;transition:color .25s}
+  .links a:hover{color:var(--amber)}
+  /* ---------- entrance / hero ---------- */
+  header{position:relative;padding:64px 0 72px;overflow:hidden;
+    background:
+      radial-gradient(ellipse 55% 42% at 50% -6%, rgba(255,190,85,.34) 0%, rgba(255,190,85,0) 70%),
+      radial-gradient(ellipse 90% 65% at 50% 115%, #3a2110 0%, var(--bg) 65%),
+      linear-gradient(var(--bg2), var(--bg));}
+  .roots{position:absolute;top:0;left:0;width:100%;height:110px;z-index:1;opacity:.9;pointer-events:none}
+  /* hanging lanterns */
+  .lantern{position:absolute;top:0;z-index:1;transform-origin:top center;animation:sway 6s ease-in-out infinite;pointer-events:none}
+  .lantern .string{width:2px;margin:0 auto;background:linear-gradient(#00000088,#00000033)}
+  .lantern .lamp{width:26px;height:26px;margin:0 auto;border-radius:50%;
+    background:radial-gradient(circle at 50% 42%, #fff3cf 0%, var(--amber) 45%, #e07f13 100%);
+    box-shadow:0 0 34px 14px rgba(255,175,60,.45), 0 0 90px 40px rgba(255,150,40,.16);
+    animation:flicker 3.4s ease-in-out infinite}
+  .lantern.l1{left:9%}.lantern.l1 .string{height:64px}
+  .lantern.l2{right:11%;animation-delay:-2.4s}.lantern.l2 .string{height:96px}.lantern.l2 .lamp{animation-delay:-1.2s}
+  .lantern.l3{left:26%;animation-delay:-4s}.lantern.l3 .string{height:40px}.lantern.l3 .lamp{width:18px;height:18px;animation-delay:-2s}
+  @keyframes sway{0%,100%{transform:rotate(2.2deg)}50%{transform:rotate(-2.2deg)}}
+  @keyframes flicker{0%,100%{filter:brightness(1)}42%{filter:brightness(1.13)}58%{filter:brightness(.94)}74%{filter:brightness(1.07)}}
+  /* fireflies / dust motes */
+  .mote{position:absolute;border-radius:50%;background:radial-gradient(circle,#ffd98f 0%,rgba(255,190,85,0) 70%);z-index:1;pointer-events:none;animation:drift linear infinite}
+  @keyframes drift{0%{transform:translate(0,0);opacity:0}12%{opacity:.85}85%{opacity:.6}100%{transform:translate(var(--dx),var(--dy));opacity:0}}
+  .hero{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
+  @media(min-width:760px){.hero{grid-template-columns:1.12fr .88fr}}
+  .kicker{color:var(--teal);font-weight:800;letter-spacing:.24em;font-size:12px;text-transform:uppercase}
+  h1{font-size:clamp(44px,8.4vw,76px);font-weight:900;line-height:1.0;margin:12px 0 12px;text-shadow:0 4px 34px rgba(255,150,50,.25)}
+  h1 .fox{color:var(--fox)}
+  .tag{color:var(--muted);font-size:clamp(16px,2.4vw,19px);max-width:520px}
+  .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:800;text-decoration:none;font-size:15px;transition:transform .25s, box-shadow .25s, background .25s}
+  .btn-solid{background:linear-gradient(135deg,var(--fox),#e05e00);color:#fff;box-shadow:0 8px 26px rgba(242,109,0,.35)}
+  .btn-solid:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(242,109,0,.5)}
+  .btn-ghost{border:2px solid var(--line);color:var(--ink);background:rgba(42,26,14,.5)}
+  .btn-ghost:hover{border-color:var(--fox);color:var(--amber);transform:translateY(-2px)}
+  .foxstage{position:relative;perspective:900px}
+  .foxstage::before{content:"";position:absolute;inset:8% 4%;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,170,60,.34) 0%,rgba(255,170,60,0) 68%);filter:blur(6px);z-index:0}
+  .heroimg{position:relative;z-index:1;width:100%;max-height:500px;object-fit:cover;object-position:top;display:block;
+    border-radius:26px;border:3px solid #573a1c;box-shadow:0 24px 60px rgba(0,0,0,.55);
+    animation:bob 6.5s ease-in-out infinite;transition:transform .35s ease-out}
+  @keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}
+  /* paw trail */
+  .pawtrail{display:flex;justify-content:center;gap:clamp(14px,4vw,34px);padding:6px 0 0;opacity:.5}
+  .pawtrail svg{width:26px;height:26px;fill:#8a5a28}
+  .pawtrail svg:nth-child(odd){transform:rotate(-16deg) translateY(5px)}
+  .pawtrail svg:nth-child(even){transform:rotate(14deg)}
+  /* ---------- rooms / sections ---------- */
+  section{padding:52px 0 8px;position:relative}
+  .room{color:var(--fox);font-weight:800;letter-spacing:.24em;font-size:11px;text-transform:uppercase}
+  h2{font-size:30px;font-weight:900;margin:4px 0 6px}
+  h2 .fox{color:var(--fox)}
+  .sub{color:var(--muted);margin-bottom:24px;max-width:660px}
+  .grid{display:grid;grid-template-columns:1fr;gap:18px}
+  @media(min-width:720px){.grid{grid-template-columns:1fr 1fr 1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    transition:transform .3s, box-shadow .3s, border-color .3s}
+  .card:hover{transform:translateY(-5px);border-color:#7a4d1e;box-shadow:0 16px 38px rgba(0,0,0,.45), 0 0 0 1px rgba(255,160,60,.12), 0 6px 30px rgba(255,140,40,.10)}
+  .card img{width:100%;height:200px;object-fit:cover;object-position:top;display:block}
+  .card .body{padding:18px}
+  .card h3{font-size:18px;font-weight:800;margin-bottom:6px}
+  .card p{color:var(--muted);font-size:14.5px}
+  .card a{font-weight:700}
+  .chip{display:inline-block;margin-top:12px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);border:1.5px solid #1f5f66;background:rgba(21,151,165,.12);padding:4px 10px;border-radius:999px}
+  .chip.hot{color:var(--amber);border-color:#7a5518;background:rgba(255,170,40,.10)}
+  /* comic */
+  .strip{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:720px){.strip{grid-template-columns:1fr 1fr 1fr}}
+  .panel{background:var(--panel-solid);border:3px solid #0d0803;border-radius:16px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.4);transition:transform .3s}
+  .panel:hover{transform:translateY(-5px) rotate(-.4deg)}
+  .panel img{width:100%;height:230px;object-fit:cover;object-position:top;display:block}
+  .bubble{padding:14px 16px;font-weight:700;font-size:15px;background:linear-gradient(180deg,#33200f,#2a1a0e)}
+  .bubble small{display:block;color:var(--fox2);font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+  /* ideas */
+  .ideas{display:flex;flex-wrap:wrap;gap:10px}
+  .idea{background:var(--panel2);border:1.5px solid var(--line);border-radius:999px;padding:10px 17px;font-weight:700;font-size:14.5px;transition:transform .25s, border-color .25s}
+  .idea:hover{transform:translateY(-3px) rotate(-.6deg);border-color:var(--fox)}
+  .idea b{color:var(--amber)}
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  /* footer */
+  footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 46px;text-align:center;color:var(--muted);font-size:14px;
+    background:radial-gradient(ellipse 70% 100% at 50% 130%, #3a2110 0%, transparent 70%)}
+  footer .flinks{margin-bottom:12px}
+  footer .flinks a{margin:0 10px;font-weight:700;text-decoration:none}
+  footer .flinks a:hover{text-decoration:underline}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">THE FOX&rsquo;S <span>LAIR</span><small>FOX IS LOOSE</small></a>
+    <div class="links">
+      <a href="#finds">The Stash</a>
+      <a href="#comic">Comic</a>
+      <a href="#videos">Videos</a>
+      <a href="#ideas">Idea Burrow</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <!-- den ceiling roots -->
+  <svg class="roots" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,0 L1200,0 L1200,14 C1050,30 1000,66 940,44 C880,24 860,84 790,58 C730,36 700,10 620,22 C540,34 520,92 450,62 C390,38 360,16 280,26 C200,36 170,78 105,50 C60,30 30,22 0,30 Z" fill="#0d0803"/>
+    <path d="M150,20 q6,40 -4,72 M470,34 q-4,34 6,58 M905,30 q8,30 -2,56" stroke="#0d0803" stroke-width="7" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div class="lantern l1"><div class="string"></div><div class="lamp"></div></div>
+  <div class="lantern l2"><div class="string"></div><div class="lamp"></div></div>
+  <div class="lantern l3"><div class="string"></div><div class="lamp"></div></div>
+  <div id="motes"></div>
+
+  <div class="wrap hero">
+    <div class="reveal in">
+      <div class="kicker">You found the entrance · Come on in</div>
+      <h1>THE FOX&rsquo;S <span class="fox">LAIR</span></h1>
+      <p class="tag">Welcome underground. This is where the fox keeps everything he digs up — the best random finds, half-crazy ideas, a comic strip, and videos — all stashed in one cozy den and refreshed daily.</p>
+      <div class="cta">
+        <a class="btn btn-solid" href="https://x.com/RaTod173704" target="_blank" rel="noopener">Follow the fox on X</a>
+        <a class="btn btn-ghost" href="#finds">Dig into the stash</a>
+      </div>
+    </div>
+    <div class="foxstage">
+      <img class="heroimg" id="foximg" src="img/fox-hero.jpg" alt="The fox in his lair — headphones on, phone in one paw, DJ deck in the other">
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="pawtrail" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 13.2c2.9 0 5.6 2.3 5.6 4.7 0 1.5-1.1 2.4-2.7 2.4-1 0-1.8-.4-2.9-.4s-1.9.4-2.9.4c-1.6 0-2.7-.9-2.7-2.4 0-2.4 2.7-4.7 5.6-4.7ZM6.2 9.4c1 .3 1.5 1.5 1.1 2.7-.4 1.2-1.5 2-2.5 1.7-1-.3-1.5-1.5-1.1-2.7.4-1.2 1.5-2 2.5-1.7Zm11.6 0c1-.3 2.1.5 2.5 1.7.4 1.2-.1 2.4-1.1 2.7-1 .3-2.1-.5-2.5-1.7-.4-1.2.1-2.4 1.1-2.7ZM9.3 4.6c1.1.1 1.9 1.3 1.8 2.6-.1 1.3-1 2.3-2.1 2.2C7.9 9.3 7.1 8.1 7.2 6.8c.1-1.3 1-2.3 2.1-2.2Zm5.4 0c1.1-.1 2 .9 2.1 2.2.1 1.3-.7 2.5-1.8 2.6-1.1.1-2-.9-2.1-2.2-.1-1.3.7-2.5 1.8-2.6Z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 13.2c2.9 0 5.6 2.3 5.6 4.7 0 1.5-1.1 2.4-2.7 2.4-1 0-1.8-.4-2.9-.4s-1.9.4-2.9.4c-1.6 0-2.7-.9-2.7-2.4 0-2.4 2.7-4.7 5.6-4.7ZM6.2 9.4c1 .3 1.5 1.5 1.1 2.7-.4 1.2-1.5 2-2.5 1.7-1-.3-1.5-1.5-1.1-2.7.4-1.2 1.5-2 2.5-1.7Zm11.6 0c1-.3 2.1.5 2.5 1.7.4 1.2-.1 2.4-1.1 2.7-1 .3-2.1-.5-2.5-1.7-.4-1.2.1-2.4 1.1-2.7ZM9.3 4.6c1.1.1 1.9 1.3 1.8 2.6-.1 1.3-1 2.3-2.1 2.2C7.9 9.3 7.1 8.1 7.2 6.8c.1-1.3 1-2.3 2.1-2.2Zm5.4 0c1.1-.1 2 .9 2.1 2.2.1 1.3-.7 2.5-1.8 2.6-1.1.1-2-.9-2.1-2.2-.1-1.3.7-2.5 1.8-2.6Z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 13.2c2.9 0 5.6 2.3 5.6 4.7 0 1.5-1.1 2.4-2.7 2.4-1 0-1.8-.4-2.9-.4s-1.9.4-2.9.4c-1.6 0-2.7-.9-2.7-2.4 0-2.4 2.7-4.7 5.6-4.7ZM6.2 9.4c1 .3 1.5 1.5 1.1 2.7-.4 1.2-1.5 2-2.5 1.7-1-.3-1.5-1.5-1.1-2.7.4-1.2 1.5-2 2.5-1.7Zm11.6 0c1-.3 2.1.5 2.5 1.7.4 1.2-.1 2.4-1.1 2.7-1 .3-2.1-.5-2.5-1.7-.4-1.2.1-2.4 1.1-2.7ZM9.3 4.6c1.1.1 1.9 1.3 1.8 2.6-.1 1.3-1 2.3-2.1 2.2C7.9 9.3 7.1 8.1 7.2 6.8c.1-1.3 1-2.3 2.1-2.2Zm5.4 0c1.1-.1 2 .9 2.1 2.2.1 1.3-.7 2.5-1.8 2.6-1.1.1-2-.9-2.1-2.2-.1-1.3.7-2.5 1.8-2.6Z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 13.2c2.9 0 5.6 2.3 5.6 4.7 0 1.5-1.1 2.4-2.7 2.4-1 0-1.8-.4-2.9-.4s-1.9.4-2.9.4c-1.6 0-2.7-.9-2.7-2.4 0-2.4 2.7-4.7 5.6-4.7ZM6.2 9.4c1 .3 1.5 1.5 1.1 2.7-.4 1.2-1.5 2-2.5 1.7-1-.3-1.5-1.5-1.1-2.7.4-1.2 1.5-2 2.5-1.7Zm11.6 0c1-.3 2.1.5 2.5 1.7.4 1.2-.1 2.4-1.1 2.7-1 .3-2.1-.5-2.5-1.7-.4-1.2.1-2.4 1.1-2.7ZM9.3 4.6c1.1.1 1.9 1.3 1.8 2.6-.1 1.3-1 2.3-2.1 2.2C7.9 9.3 7.1 8.1 7.2 6.8c.1-1.3 1-2.3 2.1-2.2Zm5.4 0c1.1-.1 2 .9 2.1 2.2.1 1.3-.7 2.5-1.8 2.6-1.1.1-2-.9-2.1-2.2-.1-1.3.7-2.5 1.8-2.6Z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 13.2c2.9 0 5.6 2.3 5.6 4.7 0 1.5-1.1 2.4-2.7 2.4-1 0-1.8-.4-2.9-.4s-1.9.4-2.9.4c-1.6 0-2.7-.9-2.7-2.4 0-2.4 2.7-4.7 5.6-4.7ZM6.2 9.4c1 .3 1.5 1.5 1.1 2.7-.4 1.2-1.5 2-2.5 1.7-1-.3-1.5-1.5-1.1-2.7.4-1.2 1.5-2 2.5-1.7Zm11.6 0c1-.3 2.1.5 2.5 1.7.4 1.2-.1 2.4-1.1 2.7-1 .3-2.1-.5-2.5-1.7-.4-1.2.1-2.4 1.1-2.7ZM9.3 4.6c1.1.1 1.9 1.3 1.8 2.6-.1 1.3-1 2.3-2.1 2.2C7.9 9.3 7.1 8.1 7.2 6.8c.1-1.3 1-2.3 2.1-2.2Zm5.4 0c1.1-.1 2 .9 2.1 2.2.1 1.3-.7 2.5-1.8 2.6-1.1.1-2-.9-2.1-2.2-.1-1.3.7-2.5 1.8-2.6Z"/></svg>
+    </div>
+  </div>
+</header>
+
+<section id="finds">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="room">Room 01 · The Stash</div>
+      <h2>Fox <span class="fox">Finds</span></h2>
+      <p class="sub">The fox scrolls so you don&rsquo;t have to. Everything worth keeping gets dragged back to the lair and stashed here — gadgets, clips, weird facts, local gems. <b>Restocked every morning by the fox&rsquo;s research script.</b></p>
+    </div>
+    <div class="grid" id="finds-grid"></div>
+    <noscript><p class="sub">The stash needs JavaScript to open — the fox is working on it.</p></noscript>
+  </div>
+</section>
+
+<section id="comic">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="room">Room 02 · The Story Burrow</div>
+      <h2>The Loose <span class="fox">Strip</span></h2>
+      <p class="sub">A comic about a fox, his phone, and the trouble both of them get into. New strips whenever inspiration (or insomnia) strikes.</p>
+    </div>
+    <div class="strip reveal">
+      <div class="panel">
+        <img src="img/fox-close.jpg" alt="Panel 1 — the fox scrolling his phone">
+        <div class="bubble"><small>Strip #001 · Panel 1</small>&ldquo;Just five more minutes of scrolling&hellip;&rdquo;</div>
+      </div>
+      <div class="panel">
+        <img src="img/fox-sit.jpg" alt="Panel 2 — the fox gesturing, making his case">
+        <div class="bubble"><small>Panel 2</small>&ldquo;Okay but hear me out — this one&rsquo;s actually incredible.&rdquo;</div>
+      </div>
+      <div class="panel">
+        <img src="img/fox-hero.jpg" alt="Panel 3 — the fox holding up the find, DJ deck in paw">
+        <div class="bubble"><small>Panel 3</small>&ldquo;VERDICT: LOOSE!&rdquo;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="videos">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="room">Room 03 · The Screening Hollow</div>
+      <h2>Fox <span class="fox">Videos</span></h2>
+      <p class="sub">Short videos from the deepest room in the den — reactions, finds brought to life, and whatever the DJ deck inspires next.</p>
+    </div>
+    <div class="grid reveal">
+      <div class="card">
+        <div class="body">
+          <h3>Fox Reacts</h3>
+          <p>The fox watches the wildest clips the internet has to offer — and does not hold back.</p>
+          <span class="chip hot">Coming soon</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <h3>Find of the Day — Video Edition</h3>
+          <p>The day&rsquo;s best find, shown off properly: what it is, why it rules, in under a minute.</p>
+          <span class="chip hot">Coming soon</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <h3>Deck Sessions</h3>
+          <p>The headphones aren&rsquo;t just a look. Short mixes and song picks from the fox&rsquo;s deck.</p>
+          <span class="chip hot">Coming soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ideas">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="room">Room 04 · The Idea Burrow</div>
+      <h2>The Idea <span class="fox">Jar</span></h2>
+      <p class="sub">Half-formed, fully loose. Ideas get buried here first — the good ones grow into posts, strips, and videos. Steal one and the fox will pretend he isn&rsquo;t flattered.</p>
+    </div>
+    <div class="ideas reveal">
+      <div class="idea"><b>Fox vs.</b> — weekly either/or polls</div>
+      <div class="idea"><b>Caption This</b> — you caption the fox photo</div>
+      <div class="idea"><b>Ask the Fox</b> — questions answered in character</div>
+      <div class="idea"><b>60-Second Review</b> — anything, reviewed fast</div>
+      <div class="idea"><b>Local Loose</b> — hidden gems around southern Illinois</div>
+      <div class="idea"><b>Fox Facts</b> — one wild true fact per post</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="flinks">
+      <a href="https://x.com/RaTod173704" target="_blank" rel="noopener">X — @RaTod173704</a>
+    </div>
+    <div>© 2026 The Fox&rsquo;s Lair · Fox Is Loose · Dug in Benton, Illinois · Stay loose.</div>
+  </div>
+</footer>
+
+<script src="finds.js"></script>
+<script>
+  (function () {
+    /* --- render the daily finds into the stash --- */
+    var grid = document.getElementById('finds-grid');
+    if (grid && window.FOX_FINDS) {
+      window.FOX_FINDS.slice(0, 6).forEach(function (f, i) {
+        var card = document.createElement('div');
+        card.className = 'card reveal';
+        card.style.transitionDelay = (i % 3) * 90 + 'ms';
+        var html = '';
+        if (f.img) html += '<img src="' + f.img + '" alt="">';
+        html += '<div class="body"><h3>' + f.title + '</h3><p>' + f.blurb + '</p>';
+        html += '<span class="chip' + (f.category === 'Find of the Day' ? ' hot' : '') + '">' + f.category + '</span>';
+        html += '<p style="margin-top:10px;font-size:12.5px">' + f.date;
+        if (f.url) html += ' · <a href="' + f.url + '" target="_blank" rel="noopener">See the find →</a>';
+        html += '</p></div>';
+        card.innerHTML = html;
+        grid.appendChild(card);
+      });
+    }
+
+    /* --- scroll reveal --- */
+    var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 }) : null;
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      if (io) io.observe(el); else el.classList.add('in');
+    });
+
+    /* --- floating dust motes in the entrance --- */
+    var motes = document.getElementById('motes');
+    if (motes && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      for (var i = 0; i < 22; i++) {
+        var m = document.createElement('span');
+        m.className = 'mote';
+        var size = 4 + Math.random() * 7;
+        m.style.width = m.style.height = size + 'px';
+        m.style.left = (Math.random() * 98) + '%';
+        m.style.top = (15 + Math.random() * 75) + '%';
+        m.style.setProperty('--dx', (Math.random() * 90 - 45) + 'px');
+        m.style.setProperty('--dy', (-30 - Math.random() * 70) + 'px');
+        m.style.animationDuration = (7 + Math.random() * 9) + 's';
+        m.style.animationDelay = (-Math.random() * 12) + 's';
+        motes.appendChild(m);
+      }
+    }
+
+    /* --- the fox leans toward your cursor --- */
+    var img = document.getElementById('foximg');
+    if (img && window.matchMedia('(pointer: fine)').matches) {
+      var stage = img.parentElement;
+      stage.addEventListener('mousemove', function (ev) {
+        var r = stage.getBoundingClientRect();
+        var x = (ev.clientX - r.left) / r.width - 0.5;
+        var y = (ev.clientY - r.top) / r.height - 0.5;
+        img.style.transform = 'rotateY(' + (x * 7) + 'deg) rotateX(' + (-y * 7) + 'deg)';
+      });
+      stage.addEventListener('mouseleave', function () { img.style.transform = ''; });
+    }
+  })();
+</script>
+</body>
+</html>
